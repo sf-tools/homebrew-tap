@@ -57,10 +57,6 @@ class Ant < Formula
       ENV["RANLIB"] = (llvm.opt_bin/"llvm-ranlib").to_s
       ENV.append "LDFLAGS", "-fuse-ld=lld"
 
-      # Upstream HEAD references this generated, gitignored include directory
-      # from a non-default example target during Meson setup.
-      mkdir_p "packages/libant/dist"
-
       meson_args = std_meson_args.reject { |arg| arg.start_with?("--wrap-mode=") }
       system "meson", "setup", "build", *meson_args, "--wrap-mode=default", "-Dcodesign=false"
       system "meson", "compile", "-C", "build"
